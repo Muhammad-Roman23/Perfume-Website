@@ -1,5 +1,9 @@
+'use client'
+
+import HeroSection from "../Components/HeroSection";
+
 export default function About() {
   return (
-   <h1>hello world</h1>
+   <HeroSection />
   );
 }

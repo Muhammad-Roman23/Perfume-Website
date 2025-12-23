@@ -1,3 +1,4 @@
+import Navbar from './Components/Navbar';
 import './globals.css';
 // import { Inter } from 'next/font/google';
 // import { Playfair_Display } from 'next/font/google';
@@ -30,8 +31,9 @@ export default function RootLayout({
   return (
     <html lang="en">
      <body className={`${poppins.variable} ${playfair.variable} antialiased`}>
-  {children}
-</body>
+      <Navbar/>
+      {children}
+    </body>
     </html>
   );
 }
