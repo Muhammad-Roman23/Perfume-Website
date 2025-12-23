@@ -13,7 +13,7 @@ import TestimonialsSection from "./Components/TestimonialsSection";
 export default function Home() {      
   return( 
     <>
-    <Navbar />
+
     <HomeBanner/>
     <AboutAndSocialSections />
     <FeaturedProducts />
@@ -22,7 +22,7 @@ export default function Home() {
     <BenefitsSection />
     <Follow />
     <SensoryStorySection />
-    <Footer />
+
       
     </>
 
