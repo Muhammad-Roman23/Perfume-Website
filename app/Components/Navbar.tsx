@@ -60,12 +60,12 @@ export default function Navbar() {
             <div className="hidden md:block">
               <Link
                 href="#"
-                className="group relative inline-flex items-center justify-center px-9 py-3 bg-white text-black font-bold text-sm rounded-full overflow-hidden transition-all duration-700"
+                className="group relative inline-flex items-center justify-center px-9 py-3 bg-white text-black font-bold text-sm rounded-2xl overflow-hidden transition-all duration-700"
               >
                 {/* Background Shift */}
 
                 {/* Text - Hover pe right shift */}
-                <span className="relative z-10 flex items-center -translate-x-2 transition-transform duration-700 group-hover:translate-x-4">
+                <span className="relative z-10 flex items-center   -translate-x-2 transition-transform duration-700 group-hover:translate-x-4">
                   Get Started
                 </span>
 
@@ -112,7 +112,7 @@ export default function Navbar() {
                   <Link
                     href="#"
                     onClick={() => setIsOpen(false)}
-                    className="inline-flex items-center gap-2 px-6 py-2.5 bg-white text-black font-bold text-sm rounded-full"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 bg-white text-black font-bold text-sm rounded-2xl"
                   >
                     Get Started
                     <ArrowRight size={18} />
