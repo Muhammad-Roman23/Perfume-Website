@@ -1,7 +1,7 @@
 
 import AboutAndSocialSections from "./Components/AboutAndSocialSections";
 import BenefitsSection from "./Components/BenefitsSection";
-import {FeaturedProducts} from "./Components/FeaturedProducts";
+import FeaturedProducts from "./Components/FeaturedProducts";
 import Follow from "./Components/Follow";
 import Footer from "./Components/Footer";
 import  HomeBanner  from "./Components/HomeBanner";

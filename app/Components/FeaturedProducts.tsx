@@ -3,7 +3,7 @@
   import { motion } from 'framer-motion';
   import { Star } from 'lucide-react'; // Make sure lucide-react is installed
 
-  export const FeaturedProducts = () => {
+  export default function FeaturedProducts  () {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     // Premium black & gold luxury perfume bottle images (high-quality, dark theme)
