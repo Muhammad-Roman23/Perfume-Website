@@ -104,7 +104,7 @@ export default function SignInPage() {
                 <input type="checkbox" id="remember" className="h-4 w-4 text-gray-900 rounded" />
                 <label htmlFor="remember" className="ml-3 text-sm text-gray-600">Remember me</label>
               </div>
-              <a href="#" className="text-sm text-gray-900 underline hover:text-gray-700">Forgot password?</a>
+              <Link href="#" className="text-sm text-gray-900 underline hover:text-gray-700">Forgot password?</Link>
             </div>
 
             <motion.button
@@ -129,12 +129,12 @@ export default function SignInPage() {
 
       {/* Right Side - Premium Image + Centered Text */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-black overflow-hidden">
-        <img
+        <Image
           src="https://thumbs.dreamstime.com/b/luxurious-black-perfume-bottle-gold-cap-dramatic-still-life-showcase-exquisite-fragrance-immerse-yourself-357744082.jpg"
           alt="Premium Luxury Perfume"
-          // fill
+
+          fill   // ya container ke hisaab se adjust karein
           className="object-cover object-center"
-          // priority
         />
 
         <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/80" />

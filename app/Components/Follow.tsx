@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function Follow () {
     return(
@@ -52,13 +53,13 @@ export default function Follow () {
                 transition={{ duration: 0.7, delay: index * 0.1 }}
                 className="block rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:scale-105"
               >
-                <img
-                  src={src}
-                  alt={`AURA Instagram Post ${index + 1}`}
-                  width={400}
-                  height={400}
-                  className="object-cover w-full h-full"
-                />
+              <Image 
+                src={src}
+                alt={`AURA Instagram Post ${index + 1}`}
+                width={400}
+                height={400}
+                className="object-cover w-full h-full"
+              />
               </motion.a>
             ))}
           </div>

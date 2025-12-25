@@ -188,14 +188,13 @@ export default function ContactFormSection() {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="relative h-96 md:h-full min-h-[500px] flex items-center justify-center"
           >
-            <img
-              src="https://static.vecteezy.com/system/resources/previews/070/649/024/non_2x/luxury-golden-perfume-bottle-with-ornate-design-isolated-on-transparent-background-png.png"
-              alt="Luxury Perfume Bottle"
-              width={600}
-              height={800}
-              className="object-contain drop-shadow-2xl"
-            //   priority
-            />
+           <Image
+          src="https://static.vecteezy.com/system/resources/previews/070/649/024/non_2x/luxury-golden-perfume-bottle-with-ornate-design-isolated-on-transparent-background-png.png"
+          alt="Luxury Perfume Bottle"
+          width={600}
+          height={800}
+          className="object-contain drop-shadow-2xl"
+        />
           </motion.div>
         </div>
       </motion.div>

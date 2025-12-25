@@ -2,6 +2,7 @@
   import React, { useState } from 'react';
   import { motion } from 'framer-motion';
   import { Star } from 'lucide-react'; // Make sure lucide-react is installed
+import Image from 'next/image';
 
   export default function FeaturedProducts  () {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -63,13 +64,14 @@
                       className="group relative overflow-hidden rounded-2xl shadow-2xl cursor-pointer border border-gray-400 h-[500px]" // increased height slightly for better centering
                     >
                       <div className="relative h-full w-full">
-                        <img
-                          src={image}
-                          alt={productDetails[index].name}
-                          className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 ease-out ${
-                            hoveredIndex === index ? 'blur-md scale-110' : 'blur-0 scale-100'
-                          }`}
-                        />
+                       <Image
+                        src={image}
+                        alt={productDetails[index].name}
+                        fill
+                        className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-1000 ease-out ${
+                          hoveredIndex === index ? 'blur-md scale-110' : 'blur-0 scale-100'
+                        }`}
+                      />
       
                         {/* Dark overlay on hover */}
                         <div 

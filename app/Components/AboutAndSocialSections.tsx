@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AboutAndSocialSections() {
   return (
@@ -42,12 +43,12 @@ export default function AboutAndSocialSections() {
                 transition={{ duration: 0.9, delay: 0.6 }}
                 className=" mt-10"
         >
-          <a
-            href="#contact"
-            className="inline-block px-8 py-4 bg-black text-white font-bold text-xl rounded-2xl hover:bg-gray-800 transition-all duration-500 "
-          >
-            Contact Now
-          </a>
+        <Link
+          href="/contact"
+          className="inline-block px-8 py-4 bg-black text-white font-bold text-xl rounded-2xl hover:bg-gray-800 transition-all duration-500"
+        >
+          Contact Now
+        </Link>
         </motion.div>
             </motion.div>
 
@@ -59,42 +60,48 @@ export default function AboutAndSocialSections() {
               transition={{ duration: 0.9 }}
               className="grid grid-cols-2 gap-8"
             >
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
-                <img
-                  src="https://img.freepik.com/premium-photo/beautiful-perfume-bottle-black-marble-background_74656-929.jpg"
-                  alt="AURA Luxury Perfume Bottle"
-                  width={600}
-                  height={800}
-                  className="object-cover w-full h-full hover:scale-110 transition-transform duration-700"
-                />
-              </div>
-              <div className="rounded-3xl overflow-hidden shadow-2xl -mt-16">
-                <img
-                  src="https://thumbs.dreamstime.com/b/black-perfume-bottle-marble-surface-suitable-wide-range-uses-354853099.jpg"
-                  alt="AURA Cologne on Marble"
-                  width={600}
-                  height={800}
-                  className="object-cover w-full h-full hover:scale-110 transition-transform duration-700"
-                />
-              </div>
-              <div className="rounded-3xl overflow-hidden shadow-2xl ">
-                <img
-                  src="https://thumbs.dreamstime.com/b/luxury-dark-perfume-bottle-elegant-texture-dramatic-lighting-black-table-luxurious-textured-surface-shown-398748408.jpg"
-                  alt="Dark Luxury AURA Bottle"
-                  width={600}
-                  height={800}
-                  className="object-cover w-full h-full hover:scale-110 transition-transform duration-700"
-                />
-              </div>
-              <div className="rounded-3xl overflow-hidden shadow-2xl ">
-                <img
-                  src="https://www.shutterstock.com/image-photo/luxury-mens-perfume-bottle-on-600nw-2456359291.jpg"
-                  alt="Men's Premium Cologne"
-                  width={600}
-                  height={800}
-                  className="object-cover w-full h-full hover:scale-110 transition-transform duration-700"
-                />
-              </div>
+ 
+
+<div className="rounded-3xl overflow-hidden shadow-2xl">
+  <Image
+    src="https://img.freepik.com/premium-photo/beautiful-perfume-bottle-black-marble-background_74656-929.jpg"
+    alt="AURA Luxury Perfume Bottle"
+    width={600}
+    height={800}
+    className="object-cover w-full h-full hover:scale-110 transition-transform duration-700"
+  />
+</div>
+
+<div className="rounded-3xl overflow-hidden shadow-2xl -mt-16">
+  <Image
+    src="https://thumbs.dreamstime.com/b/black-perfume-bottle-marble-surface-suitable-wide-range-uses-354853099.jpg"
+    alt="AURA Cologne on Marble"
+    width={600}
+    height={800}
+    className="object-cover w-full h-full hover:scale-110 transition-transform duration-700"
+  />
+</div>
+
+<div className="rounded-3xl overflow-hidden shadow-2xl">
+  <Image
+    src="https://thumbs.dreamstime.com/b/luxury-dark-perfume-bottle-elegant-texture-dramatic-lighting-black-table-luxurious-textured-surface-shown-398748408.jpg"
+    alt="Dark Luxury AURA Bottle"
+    width={600}
+    height={800}
+    className="object-cover w-full h-full hover:scale-110 transition-transform duration-700"
+  />
+</div>
+
+<div className="rounded-3xl overflow-hidden shadow-2xl">
+  <Image
+    src="https://www.shutterstock.com/image-photo/luxury-mens-perfume-bottle-on-600nw-2456359291.jpg"
+    alt="Men's Premium Cologne"
+    width={600}
+    height={800}
+    className="object-cover w-full h-full hover:scale-110 transition-transform duration-700"
+  />
+</div>
+
             </motion.div>
           </div>
         </div>

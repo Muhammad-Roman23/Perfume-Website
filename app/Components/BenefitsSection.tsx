@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Clock, Sparkles, Leaf, Package } from "lucide-react";
+import Link from "next/link";
 
 export default function BenefitsSection() {
   const benefits = [
@@ -125,12 +126,12 @@ export default function BenefitsSection() {
           transition={{ duration: 0.9, delay: 0.6 }}
           className="text-center mt-10"
         >
-          <a
-            href="#contact"
-            className="inline-block px-10 py-4 bg-black text-white font-bold text-xl rounded-2xl "
-          >
-            Contact Now
-          </a>
+        <Link
+          href="/contact"
+          className="inline-block px-10 py-4 bg-black text-white font-bold text-xl rounded-2xl"
+        >
+          Contact Now
+        </Link>
         </motion.div>
       </div>
     </section>

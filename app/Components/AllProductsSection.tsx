@@ -2,9 +2,12 @@
 import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Star, Filter, X, SlidersHorizontal } from "lucide-react";
+import Image from "next/image";
 
 export const AllProductsSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  // const [hoveredIndex, setHoveredIndex] = useState(null);
+
   const [showFilterModal, setShowFilterModal] = useState(false);
 
   // Filter states
@@ -17,432 +20,401 @@ export const AllProductsSection = () => {
   // Sorting
   const [sortBy, setSortBy] = useState<string>("price-low");
 
-  const productImages = [
-    "https://thumbs.dreamstime.com/b/elegant-black-perfume-bottle-display-luxurious-design-elegant-black-perfume-bottle-display-luxurious-design-studio-setting-close-370609572.jpg",
-    "https://thumbs.dreamstime.com/b/elegant-black-gold-perfume-bottle-dark-surface-luxurious-rectangular-accents-sits-polished-reflecting-light-400606970.jpg",
-    "https://thumbs.dreamstime.com/b/glass-perfume-bottle-golden-liquid-inside-background-dark-smoky-creating-mysterious-atmosphere-387814660.jpg",
-    "https://thumbs.dreamstime.com/b/luxury-textured-perfume-bottle-golden-cap-smoky-spotlight-scene-stylish-rectangular-accents-dramatic-light-generative-408126859.jpg",
-    "https://thumbs.dreamstime.com/b/expensive-luxury-black-gold-background-cosmetics-cosmetic-bottles-marble-elegant-premium-cream-template-ai-generated-351877705.jpg",
-    "https://thumbs.dreamstime.com/b/soft-light-beautifully-reflected-perfume-bottle-golden-black-color-381640112.jpg",
-    "https://thumbs.dreamstime.com/b/close-up-elegant-perfume-bottle-surrounded-mist-dark-background-ai-generated-close-up-elegant-perfume-321357162.jpg",
-    "https://www.shutterstock.com/image-photo/image-showcases-luxurious-perfume-bottle-600nw-2569475799.jpg",
-    "https://thumbs.dreamstime.com/b/dark-background-glass-perfume-bottle-gold-cap-placed-featuring-flowing-abstract-golden-ribbon-dark-383172002.jpg",
-    "https://img.freepik.com/premium-photo/perfume-bottle-black-gold-elegance-generative-ai_431161-17493.jpg",
-    "https://www.shutterstock.com/image-photo/luxury-bottle-perfume-closeup-on-black-260nw-1257772759.jpg",
-    "https://thumbs.dreamstime.com/b/black-gold-bottle-emits-sparkly-mist-glitter-luxe-perfume-advertises-scent-elegant-fragrance-ad-suggests-magic-417059174.jpg",
-    "https://static.vecteezy.com/system/resources/thumbnails/071/917/995/small/luxury-perfume-bottle-with-black-cap-and-gold-collar-elegant-fragrance-studio-shot-photo.jpg",
-    "https://t3.ftcdn.net/jpg/15/46/84/28/360_F_1546842802_Y9cU8W2bT1SkfjD3kly4lNAl828IUaPt.jpg",
-    "https://www.shutterstock.com/image-photo/need-background-perfume-bottle-poster-600nw-2530096035.jpg",
-    "https://thumbs.dreamstime.com/b/clear-glass-perfume-bottle-sits-textured-stone-surface-background-dark-highlighting-s-elegant-design-golden-liquid-419127119.jpg",
-    "https://thumbs.dreamstime.com/b/elegant-perfume-bottle-luxurious-golden-background-display-stunning-elegantly-positioned-against-rich-backdrop-highlighting-367386550.jpg",
-    "https://thumbs.dreamstime.com/b/luxury-perfume-bottles-mock-up-dark-background-blue-glass-gold-ornaments-premium-fragrance-packaging-design-cosmetic-384980132.jpg",
-    "https://t3.ftcdn.net/jpg/13/76/48/16/360_F_1376481664_dlZnlhLEDJ1MEdLODdc03L6wLaB7A9BQ.jpg",
-    "https://png.pngtree.com/thumb_back/fw800/background/20251205/pngtree-elegant-glass-perfume-bottle-with-a-black-cap-and-golden-liquid-image_20740101.webp",
-    "https://png.pngtree.com/background/20230522/original/pngtree-perfume-bottle-in-an-elegant-black-color-stock-photo-picture-image_2687531.jpg",
-    "https://t3.ftcdn.net/jpg/16/12/54/48/360_F_1612544818_3avhCBcQ7nzuB0i5McrVskUkG6twOFv0.jpg",
-    "https://png.pngtree.com/background/20230526/original/pngtree-perfume-bottle-sitting-on-a-black-dark-background-picture-image_2751956.jpg",
-    "https://static.vecteezy.com/system/resources/previews/060/002/590/large_2x/luxurious-black-perfume-bottle-with-gold-ornamentation-on-glitter-background-free-photo.jpg",
-    "https://thumbs.dreamstime.com/b/glass-bottle-perfume-clear-body-gold-colored-top-rests-surface-made-black-marble-glass-bottle-378327056.jpg",
-    "https://t4.ftcdn.net/jpg/18/36/44/59/360_F_1836445949_IE5HmyOOVaBVIzy8uhkoJwk0ODdOU6wz.jpg",
-    "https://static.vecteezy.com/system/resources/thumbnails/036/557/803/small/ai-generated-luxury-perfume-cosmetic-premium-glass-bottle-banner-poster-for-beauty-promotion-of-elegant-product-for-ads-on-draped-silk-fabric-clothing-elegants-background-with-pearls-generative-ai-photo.jpg",
-    "https://www.shutterstock.com/image-illustration/bottle-perfume-displayed-on-rock-260nw-2561998197.jpg",
-    "https://media.istockphoto.com/id/1212664778/vector/perfume-bottle-on-black-silk-fabric-background.jpg?s=612x612&w=0&k=20&c=vrD9S23bjYWYOYkYhY8mJttyMtEy_wtO8G1t6nRrENE=",
-    "https://thumbs.dreamstime.com/b/white-dispenser-bottle-gold-pump-displayed-wooden-platform-dark-black-background-smoke-luxury-cosmetic-product-384840089.jpg",
-  ];
+const products = [
+  {
+    name: "Velvet Oud",
+    category: "Floral Oriental",
+    gender: "Female",
+    rating: 4.8,
+    price: 185,
+    size: "100ml",
+    notes: ["Floral", "Spicy"],
+    image: "https://thumbs.dreamstime.com/b/elegant-black-perfume-bottle-display-luxurious-design-elegant-black-perfume-bottle-display-luxurious-design-studio-setting-close-370609572.jpg",
+    description: "An enchanting fusion of Turkish rose petals and deep oud, creating a luxurious floral-oriental signature."
+  },
+  {
+    name: "Midnight Amber",
+    category: "Woody Spicy",
+    gender: "Both",
+    rating: 4.9,
+    price: 210,
+    size: "100ml",
+    notes: ["Woody", "Spicy"],
+    image: "https://thumbs.dreamstime.com/b/elegant-black-gold-perfume-bottle-dark-surface-luxurious-rectangular-accents-sits-polished-reflecting-light-400606970.jpg",
+    description: "Warm amber blended with vanilla and sandalwood for an addictive evening scent."
+  },
+  {
+    name: "Citrus Noir",
+    category: "Fresh Citrus",
+    gender: "Male",
+    rating: 4.6,
+    price: 165,
+    size: "50ml",
+    notes: ["Fresh", "Citrus"],
+    image: "https://thumbs.dreamstime.com/b/glass-perfume-bottle-golden-liquid-inside-background-dark-smoky-creating-mysterious-atmosphere-387814660.jpg",
+    description: "Explosive bergamot and lemon balanced with dark musk and leather."
+  },
+  {
+    name: "Gold Saffron",
+    category: "Spicy Oriental",
+    gender: "Both",
+    rating: 5.0,
+    price: 240,
+    size: "100ml",
+    notes: ["Spicy"],
+    image: "https://thumbs.dreamstime.com/b/luxury-textured-perfume-bottle-golden-cap-smoky-spotlight-scene-stylish-rectangular-accents-dramatic-light-generative-408126859.jpg",
+    description: "Persian saffron with incense and oud for a regal oriental aura."
+  },
+  {
+    name: "Ocean Breeze",
+    category: "Aquatic Fresh",
+    gender: "Male",
+    rating: 4.7,
+    price: 155,
+    size: "100ml",
+    notes: ["Fresh"],
+    image: "https://thumbs.dreamstime.com/b/expensive-luxury-black-gold-background-cosmetics-cosmetic-bottles-marble-elegant-premium-cream-template-ai-generated-351877705.jpg",
+    description: "Marine accords and sea salt capturing the freshness of the ocean."
+  },
+  {
+    name: "Royal Musk",
+    category: "Musky Floral",
+    gender: "Female",
+    rating: 4.8,
+    price: 195,
+    size: "100ml",
+    notes: ["Musky", "Floral"],
+    image: "https://thumbs.dreamstime.com/b/soft-light-beautifully-reflected-perfume-bottle-golden-black-color-381640112.jpg",
+    description: "White musk wrapped in jasmine and soft rose petals."
+  },
+  {
+    name: "Enchanted Rose",
+    category: "Floral",
+    gender: "Female",
+    rating: 4.9,
+    price: 220,
+    size: "50ml",
+    notes: ["Floral"],
+    image: "https://thumbs.dreamstime.com/b/close-up-elegant-perfume-bottle-surrounded-mist-dark-background-ai-generated-close-up-elegant-perfume-321357162.jpg",
+    description: "Fresh damask rose blended with fruity undertones."
+  },
+  {
+    name: "Black Leather",
+    category: "Leather Woody",
+    gender: "Male",
+    rating: 4.5,
+    price: 190,
+    size: "100ml",
+    notes: ["Woody"],
+    image: "https://www.shutterstock.com/image-photo/image-showcases-luxurious-perfume-bottle-600nw-2569475799.jpg",
+    description: "Bold leather with smoky woods and vetiver."
+  },
+  {
+    name: "Vanilla Dream",
+    category: "Gourmand",
+    gender: "Both",
+    rating: 4.8,
+    price: 175,
+    size: "100ml",
+    notes: ["Spicy"],
+    image: "https://thumbs.dreamstime.com/b/dark-background-glass-perfume-bottle-gold-cap-placed-featuring-flowing-abstract-golden-ribbon-dark-383172002.jpg",
+    description: "Creamy vanilla warmed with caramel and spices."
+  },
+  {
+    name: "Fresh Linen",
+    category: "Clean Fresh",
+    gender: "Both",
+    rating: 4.7,
+    price: 140,
+    size: "100ml",
+    notes: ["Fresh"],
+    image: "https://img.freepik.com/premium-photo/perfume-bottle-black-gold-elegance-generative-ai_431161-17493.jpg",
+    description: "Clean cotton and aldehydes for everyday freshness."
+  },
 
-  const rawProducts = [
-    {
-      name: "Velvet Oud",
-      category: "Floral Oriental",
-      gender: "Female",
-      rating: 4.8,
-      price: 185,
-      size: "100ml",
-      notes: ["Floral", "Spicy"],
-      description:
-        "An enchanting fusion of rare Turkish rose petals and precious oud wood from the depths of Southeast Asia. This luxurious scent opens with soft floral elegance before revealing deep, smoky resinous layers that linger mysteriously on the skin all day.",
-    },
-    {
-      name: "Midnight Amber",
-      category: "Woody Spicy",
-      gender: "Both",
-      rating: 4.9,
-      price: 210,
-      size: "100ml",
-      notes: ["Woody", "Spicy"],
-      description:
-        "Warm golden amber resin intertwined with creamy vanilla beans and rich sandalwood. Subtle hints of cinnamon and clove add a gentle spicy warmth, creating an addictive, cozy aura perfect for evening wear and intimate moments.",
-    },
-    {
-      name: "Citrus Noir",
-      category: "Fresh Citrus",
-      gender: "Male",
-      rating: 4.6,
-      price: 165,
-      size: "50ml",
-      notes: ["Fresh", "Citrus"],
-      description:
-        "Explosive Italian bergamot and Sicilian lemon burst into life, contrasted beautifully with dark leather accords and intense black musk. A modern masculine fragrance that balances vibrant freshness with sophisticated depth.",
-    },
-    {
-      name: "Gold Saffron",
-      category: "Spicy Oriental",
-      gender: "Both",
-      rating: 5.0,
-      price: 240,
-      size: "100ml",
-      notes: ["Spicy"],
-      description:
-        "Exquisite saffron threads from Persia blended with smoky frankincense and warm oud. Rich caramel and tonka bean base notes create an opulent, regal trail that commands attention and admiration wherever you go.",
-    },
-    {
-      name: "Ocean Breeze",
-      category: "Aquatic Fresh",
-      gender: "Male",
-      rating: 4.7,
-      price: 155,
-      size: "100ml",
-      notes: ["Fresh"],
-      description:
-        "Crisp marine accords combined with sea salt crystals and driftwood. Invigorating notes of mint and green apple provide an energizing lift, evoking the feeling of standing on a coastal cliff with the ocean wind in your face.",
-    },
-    {
-      name: "Royal Musk",
-      category: "Musky Floral",
-      gender: "Female",
-      rating: 4.8,
-      price: 195,
-      size: "100ml",
-      notes: ["Musky", "Floral"],
-      description:
-        "Pure white musk envelops delicate jasmine sambac and patchouli leaves. Soft rose and vanilla undertones create an intimate, skin-like scent that feels luxurious yet incredibly comforting throughout the day.",
-    },
-    {
-      name: "Enchanted Rose",
-      category: "Floral",
-      gender: "Female",
-      rating: 4.9,
-      price: 220,
-      size: "50ml",
-      notes: ["Floral"],
-      description:
-        "Hundreds of fresh damask rose petals layered with lychee and raspberry for a modern twist. Dewy green notes and soft musk create a romantic, feminine bouquet that blooms beautifully on warm skin.",
-    },
-    {
-      name: "Black Leather",
-      category: "Leather Woody",
-      gender: "Male",
-      rating: 4.5,
-      price: 190,
-      size: "100ml",
-      notes: ["Woody"],
-      description:
-        "Rich Russian leather accord combined with birch tar and cedarwood. Smoky vetiver and patchouli add rugged intensity, perfect for the confident man who appreciates bold, masculine elegance.",
-    },
-    {
-      name: "Vanilla Dream",
-      category: "Gourmand",
-      gender: "Both",
-      rating: 4.8,
-      price: 175,
-      size: "100ml",
-      notes: ["Spicy"],
-      description:
-        "Madagascar vanilla absolute warmed with caramel and benzoin resin. Subtle nutmeg and cinnamon create a delicious, addictive gourmand scent that feels like a warm embrace on cool evenings.",
-    },
-    {
-      name: "Fresh Linen",
-      category: "Clean Fresh",
-      gender: "Both",
-      rating: 4.7,
-      price: 140,
-      size: "100ml",
-      notes: ["Fresh"],
-      description:
-        "Crisp cotton and white linen accords with subtle aquatic notes and soft musk. Clean aldehyde top notes give that freshly laundered feeling, ideal for everyday sophistication.",
-    },
-    {
-      name: "Spice Route",
-      category: "Spicy Oriental",
-      gender: "Male",
-      rating: 4.6,
-      price: 200,
-      size: "100ml",
-      notes: ["Spicy", "Woody"],
-      description:
-        "Cardamom and black pepper open with fiery intensity, melting into saffron and oud wood. Amber and labdanum create a warm, mysterious base that evokes ancient trade routes and hidden treasures.",
-    },
-    {
-      name: "Jasmine Night",
-      category: "Floral",
-      gender: "Female",
-      rating: 5.0,
-      price: 250,
-      size: "50ml",
-      notes: ["Floral", "Musky"],
-      description:
-        "Intense night-blooming jasmine absolute with tuberose and ylang-ylang. Creamy sandalwood and white musk base create an intoxicating, head-turning floral masterpiece for special evenings.",
-    },
-    {
-      name: "Cedar Forest",
-      category: "Woody",
-      gender: "Male",
-      rating: 4.7,
-      price: 180,
-      size: "100ml",
-      notes: ["Woody"],
-      description:
-        "Atlas cedarwood and virginia cedar combined with pine and vetiver. Earthy patchouli and moss create the sensation of walking through an ancient forest after rain – grounding and powerful.",
-    },
-    {
-      name: "Peach Blossom",
-      category: "Fruity Floral",
-      gender: "Female",
-      rating: 4.8,
-      price: 160,
-      size: "100ml",
-      notes: ["Floral", "Fresh"],
-      description:
-        "Juicy peach and apricot nectar blended with delicate cherry blossom and peony. Soft vanilla musk base makes this fruity floral incredibly wearable and universally flattering.",
-    },
-    {
-      name: "Tobacco Vanille",
-      category: "Gourmand Woody",
-      gender: "Both",
-      rating: 4.9,
-      price: 230,
-      size: "100ml",
-      notes: ["Spicy", "Woody"],
-      description:
-        "Rich pipe tobacco leaves sweetened with vanilla pods and dried fruits. Cocoa and tonka bean add warmth and depth, creating a sophisticated, unisex masterpiece for cooler months.",
-    },
-    {
-      name: "Mediterranean Fig",
-      category: "Fruity Fresh",
-      gender: "Both",
-      rating: 4.6,
-      price: 150,
-      size: "50ml",
-      notes: ["Fresh"],
-      description:
-        "Ripe green fig with coconut water and marine notes. Subtle violet leaf and cedarwood create a relaxed, vacation-like scent perfect for summer days and casual elegance.",
-    },
-    {
-      name: "Oud Imperial",
-      category: "Oud Woody",
-      gender: "Both",
-      rating: 5.0,
-      price: 320,
-      size: "100ml",
-      notes: ["Woody", "Spicy"],
-      description:
-        "Pure Laotian oud oil blended with rose and saffron. Precious ambergris and sandalwood create an ultra-luxurious, long-lasting signature scent for those who demand the very best.",
-    },
-    {
-      name: "Lavender Fields",
-      category: "Aromatic",
-      gender: "Male",
-      rating: 4.5,
-      price: 145,
-      size: "100ml",
-      notes: ["Fresh"],
-      description:
-        "French lavender fields captured with rosemary and sage. Clean citrus top notes and tonka base create a classic, refreshing aromatic fougère with exceptional versatility.",
-    },
-    {
-      name: "Cherry Smoke",
-      category: "Fruity Gourmand",
-      gender: "Female",
-      rating: 4.8,
-      price: 195,
-      size: "50ml",
-      notes: ["Spicy"],
-      description:
-        "Black cherry and almond liqueur with smoky leather and rose. Vanilla and tonka create a seductive, slightly dark gourmand that's both playful and sophisticated.",
-    },
-    {
-      name: "Santal Supreme",
-      category: "Woody Creamy",
-      gender: "Both",
-      rating: 4.9,
-      price: 215,
-      size: "100ml",
-      notes: ["Woody"],
-      description:
-        "Creamy Mysore sandalwood with milk accord and cardamom. Soft iris and coconut create an incredibly smooth, addictive woody scent that feels like cashmere on skin.",
-    },
-    {
-      name: "Bergamot Bliss",
-      category: "Citrus Aromatic",
-      gender: "Both",
-      rating: 4.7,
-      price: 155,
-      size: "100ml",
-      notes: ["Citrus", "Fresh"],
-      description:
-        "Calabrian bergamot with green tea and ginger. Crisp apple and white musk create a clean, uplifting citrus scent perfect for daily wear and office environments.",
-    },
-    {
-      name: "Rose Oud",
-      category: "Floral Oriental",
-      gender: "Both",
-      rating: 4.9,
-      price: 280,
-      size: "100ml",
-      notes: ["Floral", "Woody"],
-      description:
-        "Bulgarian rose absolute married with smoky agarwood oud. Patchouli and amber create a timeless, romantic oriental masterpiece that evolves beautifully throughout the day.",
-    },
-    {
-      name: "Vetiver Earth",
-      category: "Woody Earthy",
-      gender: "Male",
-      rating: 4.6,
-      price: 170,
-      size: "100ml",
-      notes: ["Woody"],
-      description:
-        "Haitian vetiver root with grapefruit and black pepper. Earthy moss and cedar create a clean, masculine scent with incredible natural sophistication and longevity.",
-    },
-    {
-      name: "Honey Tobacco",
-      category: "Gourmand",
-      gender: "Both",
-      rating: 4.8,
-      price: 205,
-      size: "50ml",
-      notes: ["Spicy"],
-      description:
-        "Warm honey drizzled over cured tobacco leaves with clove and vanilla. Tonka and benzoin create a rich, comforting gourmand that's both sweet and slightly smoky.",
-    },
-    {
-      name: "Neroli Portofino",
-      category: "Citrus Fresh",
-      gender: "Both",
-      rating: 4.7,
-      price: 190,
-      size: "100ml",
-      notes: ["Citrus", "Fresh"],
-      description:
-        "Tunisian neroli with orange blossom and Sicilian lemon. Amber and musk base create a luxurious Mediterranean citrus that feels like summer luxury in a bottle.",
-    },
-    {
-      name: "Patchouli Intense",
-      category: "Woody Earthy",
-      gender: "Both",
-      rating: 4.8,
-      price: 225,
-      size: "100ml",
-      notes: ["Woody"],
-      description:
-        "Indonesian patchouli leaves with cocoa and vanilla absolute. Sandalwood and amber create a deep, mysterious woody scent that's both bohemian and incredibly refined.",
-    },
-    {
-      name: "Cardamom Coffee",
-      category: "Spicy Gourmand",
-      gender: "Both",
-      rating: 4.6,
-      price: 185,
-      size: "50ml",
-      notes: ["Spicy"],
-      description:
-        "Freshly roasted coffee beans with green cardamom pods and milk foam. Vanilla and praline create an addictive morning-inspired gourmand that's warm and inviting.",
-    },
-    {
-      name: "Iris Powder",
-      category: "Powdery Floral",
-      gender: "Female",
-      rating: 4.9,
-      price: 260,
-      size: "100ml",
-      notes: ["Floral"],
-      description:
-        "Precious orris root butter with violet and heliotrope. Soft vanilla and musk create a luxurious powdery veil that feels like vintage elegance reborn for modern times.",
-    },
-    {
-      name: "Pine Forest",
-      category: "Woody Fresh",
-      gender: "Male",
-      rating: 4.5,
-      price: 160,
-      size: "100ml",
-      notes: ["Woody", "Fresh"],
-      description:
-        "Siberian pine needles with juniper berries and fir balsam. Clean citrus and vetiver create a crisp, invigorating forest scent perfect for active days and outdoor adventures.",
-    },
-    {
-      name: "Coconut Paradise",
-      category: "Tropical Gourmand",
-      gender: "Female",
-      rating: 4.7,
-      price: 175,
-      size: "100ml",
-      notes: ["Fresh"],
-      description:
-        "Creamy coconut milk with pineapple and frangipani flowers. Vanilla and salted caramel create a delicious tropical escape that transports you instantly to white sand beaches.",
-    },
-  ];
+  {
+    name: "Spice Route",
+    category: "Spicy Oriental",
+    gender: "Male",
+    rating: 4.6,
+    price: 200,
+    size: "100ml",
+    notes: ["Spicy", "Woody"],
+    image: "https://www.shutterstock.com/image-photo/luxury-bottle-perfume-closeup-on-black-260nw-1257772759.jpg",
+    description: "Cardamom and pepper over a warm amber base."
+  },
+  {
+    name: "Jasmine Night",
+    category: "Floral",
+    gender: "Female",
+    rating: 5.0,
+    price: 250,
+    size: "50ml",
+    notes: ["Floral", "Musky"],
+    image: "https://thumbs.dreamstime.com/b/black-gold-bottle-emits-sparkly-mist-glitter-luxe-perfume-advertises-scent-elegant-fragrance-ad-suggests-magic-417059174.jpg",
+    description: "Intense night-blooming jasmine with creamy sandalwood."
+  },
+  {
+    name: "Cedar Forest",
+    category: "Woody",
+    gender: "Male",
+    rating: 4.7,
+    price: 180,
+    size: "100ml",
+    notes: ["Woody"],
+    image: "https://static.vecteezy.com/system/resources/thumbnails/071/917/995/small/luxury-perfume-bottle-with-black-cap-and-gold-collar-elegant-fragrance-studio-shot-photo.jpg",
+    description: "Dry cedarwood with earthy moss and pine."
+  },
+  {
+    name: "Peach Blossom",
+    category: "Fruity Floral",
+    gender: "Female",
+    rating: 4.8,
+    price: 160,
+    size: "100ml",
+    notes: ["Floral", "Fresh"],
+    image: "https://t3.ftcdn.net/jpg/15/46/84/28/360_F_1546842802_Y9cU8W2bT1SkfjD3kly4lNAl828IUaPt.jpg",
+    description: "Juicy peach blended with soft florals."
+  },
+  {
+    name: "Tobacco Vanille",
+    category: "Gourmand Woody",
+    gender: "Both",
+    rating: 4.9,
+    price: 230,
+    size: "100ml",
+    notes: ["Spicy", "Woody"],
+    image: "https://www.shutterstock.com/image-photo/need-background-perfume-bottle-poster-600nw-2530096035.jpg",
+    description: "Sweet tobacco leaves and creamy vanilla."
+  },
+  {
+    name: "Mediterranean Fig",
+    category: "Fruity Fresh",
+    gender: "Both",
+    rating: 4.6,
+    price: 150,
+    size: "50ml",
+    notes: ["Fresh"],
+    image: "https://thumbs.dreamstime.com/b/clear-glass-perfume-bottle-sits-textured-stone-surface-background-dark-highlighting-s-elegant-design-golden-liquid-419127119.jpg",
+    description: "Green fig with coconut water and marine notes."
+  },
+  {
+    name: "Oud Imperial",
+    category: "Oud Woody",
+    gender: "Both",
+    rating: 5.0,
+    price: 320,
+    size: "100ml",
+    notes: ["Woody", "Spicy"],
+    image: "https://thumbs.dreamstime.com/b/elegant-perfume-bottle-luxurious-golden-background-display-stunning-elegantly-positioned-against-rich-backdrop-highlighting-367386550.jpg",
+    description: "Pure oud blended with rose and amber."
+  },
+  {
+    name: "Lavender Fields",
+    category: "Aromatic",
+    gender: "Male",
+    rating: 4.5,
+    price: 145,
+    size: "100ml",
+    notes: ["Fresh"],
+    image: "https://thumbs.dreamstime.com/b/luxury-perfume-bottles-mock-up-dark-background-blue-glass-gold-ornaments-premium-fragrance-packaging-design-cosmetic-384980132.jpg",
+    description: "Fresh lavender with herbal nuances."
+  },
+  {
+    name: "Cherry Smoke",
+    category: "Fruity Gourmand",
+    gender: "Female",
+    rating: 4.8,
+    price: 195,
+    size: "50ml",
+    notes: ["Spicy"],
+    image: "https://t3.ftcdn.net/jpg/13/76/48/16/360_F_1376481664_dlZnlhLEDJ1MEdLODdc03L6wLaB7A9BQ.jpg",
+    description: "Dark cherry with smoky vanilla tones."
+  },
+  {
+    name: "Santal Supreme",
+    category: "Woody Creamy",
+    gender: "Both",
+    rating: 4.9,
+    price: 215,
+    size: "100ml",
+    notes: ["Woody"],
+    image: "https://png.pngtree.com/thumb_back/fw800/background/20251205/pngtree-elegant-glass-perfume-bottle-with-a-black-cap-and-golden-liquid-image_20740101.webp",
+    description: "Creamy sandalwood with cardamom."
+  },
+  {
+    name: "Bergamot Bliss",
+    category: "Citrus Aromatic",
+    gender: "Both",
+    rating: 4.7,
+    price: 155,
+    size: "100ml",
+    notes: ["Citrus", "Fresh"],
+    image: "https://png.pngtree.com/background/20230522/original/pngtree-perfume-bottle-in-an-elegant-black-color-stock-photo-picture-image_2687531.jpg",
+    description: "Bright bergamot with green tea freshness."
+  },
+  {
+    name: "Rose Oud",
+    category: "Floral Oriental",
+    gender: "Both",
+    rating: 4.9,
+    price: 280,
+    size: "100ml",
+    notes: ["Floral", "Woody"],
+    image: "https://t3.ftcdn.net/jpg/16/12/54/48/360_F_1612544818_3avhCBcQ7nzuB0i5McrVskUkG6twOFv0.jpg",
+    description: "Classic rose fused with smoky oud."
+  },
+  {
+    name: "Vetiver Earth",
+    category: "Woody Earthy",
+    gender: "Male",
+    rating: 4.6,
+    price: 170,
+    size: "100ml",
+    notes: ["Woody"],
+    image: "https://png.pngtree.com/background/20230526/original/pngtree-perfume-bottle-sitting-on-a-black-dark-background-picture-image_2751956.jpg",
+    description: "Earthy vetiver with grapefruit zest."
+  },
+  {
+    name: "Honey Tobacco",
+    category: "Gourmand",
+    gender: "Both",
+    rating: 4.8,
+    price: 205,
+    size: "50ml",
+    notes: ["Spicy"],
+    image: "https://static.vecteezy.com/system/resources/previews/060/002/590/large_2x/luxurious-black-perfume-bottle-with-gold-ornamentation-on-glitter-background-free-photo.jpg",
+    description: "Sweet honey over warm tobacco leaves."
+  },
+  {
+    name: "Neroli Portofino",
+    category: "Citrus Fresh",
+    gender: "Both",
+    rating: 4.7,
+    price: 190,
+    size: "100ml",
+    notes: ["Citrus", "Fresh"],
+    image: "https://thumbs.dreamstime.com/b/glass-bottle-perfume-clear-body-gold-colored-top-rests-surface-made-black-marble-glass-bottle-378327056.jpg",
+    description: "Mediterranean neroli with citrus brightness."
+  },
+  {
+    name: "Patchouli Intense",
+    category: "Woody Earthy",
+    gender: "Both",
+    rating: 4.8,
+    price: 225,
+    size: "100ml",
+    notes: ["Woody"],
+    image: "https://t4.ftcdn.net/jpg/18/36/44/59/360_F_1836445949_IE5HmyOOVaBVIzy8uhkoJwk0ODdOU6wz.jpg",
+    description: "Deep patchouli softened with vanilla."
+  },
+  {
+    name: "Cardamom Coffee",
+    category: "Spicy Gourmand",
+    gender: "Both",
+    rating: 4.6,
+    price: 185,
+    size: "50ml",
+    notes: ["Spicy"],
+    image: "https://static.vecteezy.com/system/resources/thumbnails/036/557/803/small/ai-generated-luxury-perfume-cosmetic-premium-glass-bottle-banner-poster-for-beauty-promotion-of-elegant-product-for-ads-on-draped-silk-fabric-clothing-elegants-background-with-pearls-generative-ai-photo.jpg",
+    description: "Fresh coffee beans with spicy cardamom."
+  },
+  {
+    name: "Iris Powder",
+    category: "Powdery Floral",
+    gender: "Female",
+    rating: 4.9,
+    price: 260,
+    size: "100ml",
+    notes: ["Floral"],
+    image: "https://www.shutterstock.com/image-illustration/bottle-perfume-displayed-on-rock-260nw-2561998197.jpg",
+    description: "Soft iris with powdery elegance."
+  },
+  {
+    name: "Pine Forest",
+    category: "Woody Fresh",
+    gender: "Male",
+    rating: 4.5,
+    price: 160,
+    size: "100ml",
+    notes: ["Woody", "Fresh"],
+    image: "https://media.istockphoto.com/id/1212664778/vector/perfume-bottle-on-black-silk-fabric-background.jpg",
+    description: "Crisp pine needles with fresh citrus."
+  },
+  {
+    name: "Coconut Paradise",
+    category: "Tropical Gourmand",
+    gender: "Female",
+    rating: 4.7,
+    price: 175,
+    size: "100ml",
+    notes: ["Fresh"],
+    image: "https://thumbs.dreamstime.com/b/white-dispenser-bottle-gold-pump-displayed-wooden-platform-dark-black-background-smoke-luxury-cosmetic-product-384840089.jpg",
+    description: "Creamy coconut with tropical sweetness."
+  }
+];
+
+
 
   // ✅ STEP 1: Attach images to first 30 products ONLY
-  const productsWithImages = useMemo(() => {
-    return rawProducts.map((product, index) => {
-      if (index < 30) {
-        return { ...product, image: productImages[index] };
-      }
-      return product;
-    });
-  }, []);
+  // const productsWithImages = useMemo(() => {
+  //   return rawProducts.map((product, index) => {
+  //     if (index < 30) {
+  //       return { ...product, image: productImages[index] };
+  //     }
+  //     return product;
+  //   });
+  // }, []);
 
   // ✅ STEP 2: Filtering & Sorting (same logic, source updated)
-  const filteredProducts = useMemo(() => {
-    let filtered = productsWithImages.filter((product) => {
-      if (selectedGenders.length > 0) {
-        const prodGender =
-          product.gender === "Both"
-            ? "Unisex"
-            : product.gender === "Female"
-            ? "Women"
-            : "Men";
-        if (!selectedGenders.includes(prodGender)) return false;
-      }
+const filteredProducts = useMemo(() => {
+  let filtered = products.filter((product) => {
+    if (selectedGenders.length > 0) {
+      const prodGender =
+        product.gender === "Both"
+          ? "Unisex"
+          : product.gender === "Female"
+          ? "Women"
+          : "Men";
+      if (!selectedGenders.includes(prodGender)) return false;
+    }
 
-      if (product.price < priceRange[0] || product.price > priceRange[1])
-        return false;
+    if (product.price < priceRange[0] || product.price > priceRange[1])
+      return false;
 
-      if (
-        selectedNotes.length > 0 &&
-        !selectedNotes.some((note) => product.notes.includes(note))
-      )
-        return false;
+    if (
+      selectedNotes.length > 0 &&
+      !selectedNotes.some((note) => product.notes.includes(note))
+    )
+      return false;
 
-      if (selectedSizes.length > 0 && !selectedSizes.includes(product.size))
-        return false;
+    if (selectedSizes.length > 0 && !selectedSizes.includes(product.size))
+      return false;
 
-      return true;
-    });
+    return true;
+  });
 
-    filtered = [...filtered].sort((a, b) => {
-      switch (sortBy) {
-        case "price-low":
-          return a.price - b.price;
-        case "price-high":
-          return b.price - a.price;
-        case "rating":
-          return b.rating - a.rating;
-        default:
-          return 0;
-      }
-    });
+  return [...filtered].sort((a, b) => {
+    switch (sortBy) {
+      case "price-low":
+        return a.price - b.price;
+      case "price-high":
+        return b.price - a.price;
+      case "rating":
+        return b.rating - a.rating;
+      default:
+        return 0;
+    }
+  });
+}, [
+  products,
+  selectedGenders,
+  priceRange,
+  selectedNotes,
+  selectedSizes,
+  sortBy,
+]);
 
-    return filtered;
-  }, [
-    productsWithImages,
-    selectedGenders,
-    priceRange,
-    selectedNotes,
-    selectedSizes,
-    sortBy,
-  ]);
 
   const resetFilters = () => {
     setSelectedGenders([]);
@@ -516,14 +488,15 @@ export const AllProductsSection = () => {
                 className="group relative overflow-hidden rounded-2xl shadow-2xl cursor-pointer border border-gray-400 h-[500px]"
               >
                 <div className="relative h-full w-full">
-                  {/* ✅ IMAGE FIX */}
-                    {/* <img
+                
+                    <Image
                       src={product.image || "/placeholder.jpg"}
                       alt={product.name}
+                      fill
                       className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${
                         hoveredIndex === index ? "blur-md scale-110" : "scale-100"
                       }`}
-                    /> */}
+                    />
 
                   <div
                     className={`absolute inset-0 bg-black/60 transition-opacity duration-700 ${

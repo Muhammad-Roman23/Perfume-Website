@@ -8,6 +8,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import Image from "next/image";
 
 export default function TestimonialsSection() {
   const testimonials = [
@@ -110,11 +111,13 @@ export default function TestimonialsSection() {
                 <div className="h-[500px] bg-white/5 backdrop-blur-md border border-gray-800 rounded-3xl p-10 text-center   hover:border-gray-600 transition-all duration-700 flex flex-col justify-between">
                   {/* Customer Photo */}
                   <div className="mx-auto w-32 h-32 rounded-full overflow-hidden mb-8 border-4 border-white">
-                    <img
-                      src={testimonial.photo}
-                      alt={testimonial.name}
-                      className="w-full h-full object-cover"
-                    />
+                  <Image
+                    src={testimonial.photo}
+                    alt={testimonial.name}
+                    width={500}       // ya container ke hisaab se adjust karein
+                    height={500}      // ya container ke hisaab se adjust karein
+                    className="w-full h-full object-cover"
+                  />
                   </div>
 
                   {/* Rating */}

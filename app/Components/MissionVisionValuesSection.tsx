@@ -100,13 +100,15 @@ export default function MissionVisionValuesSection() {
                 transition={{ duration: 0.6, ease: "easeInOut" }}
                 className="relative w-full h-full max-w-md"
               >
-                <img
-                  src={current.image}
-                  alt={current.title}
-                //   fill
-                  className="object-contain drop-shadow-2xl me-auto"
-                //   priority
-                />
+                
+              <Image
+                src={current.image}
+                alt={current.title}
+                width={500}       
+                height={500}      
+                className="object-contain drop-shadow-2xl me-auto"
+              />
+
               </motion.div>
             </AnimatePresence>
           </div>

@@ -55,12 +55,11 @@ export default function RegisterPage() {
     <div className="h-screen flex overflow-hidden">
       {/* Left Side - Premium Image + Centered Text */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-black overflow-hidden">
-        <img
+        <Image
           src="https://thumbs.dreamstime.com/b/luxurious-black-perfume-bottle-gold-cap-dramatic-still-life-showcase-exquisite-fragrance-immerse-yourself-357744082.jpg"
           alt="Premium Luxury Perfume"
-          // fill
+          fill
           className="object-cover object-center"
-          // priority
         />
 
         <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/80" />
@@ -190,7 +189,7 @@ export default function RegisterPage() {
                 className="h-4 w-4 text-gray-900 rounded"
               />
               <label htmlFor="terms" className="ml-3 text-sm text-gray-600">
-                I agree to the <a href="#" className="text-gray-900 underline">Terms & Conditions</a>
+                I agree to the <Link href="#" className="text-gray-900 underline">Terms & Conditions</Link>
               </label>
             </div>
             {formik.touched.terms && formik.errors.terms && (

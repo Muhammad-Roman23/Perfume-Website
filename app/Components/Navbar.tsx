@@ -57,7 +57,7 @@ export default function Navbar() {
           {/* Get Started Button + Hamburger */}
           <div className="flex items-center gap-6">
             {/* Get Started Button - Pure Tailwind Hover Swap Effect */}
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <Link
                 href="/register"
                 className="group relative inline-flex items-center justify-center px-9 py-3 bg-white text-black font-bold text-sm rounded-2xl overflow-hidden transition-all duration-700"
