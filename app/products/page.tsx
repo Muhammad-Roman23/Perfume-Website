@@ -12,8 +12,6 @@ export default function About() {
     <>
    <HeroSection />
    <AllProductsSection />
-   <Compare />
-
     </>
   );
 }
