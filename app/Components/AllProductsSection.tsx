@@ -517,13 +517,13 @@ export const AllProductsSection = () => {
               >
                 <div className="relative h-full w-full">
                   {/* ✅ IMAGE FIX */}
-                  <img
-                    src={product.image || "/placeholder.jpg"}
-                    alt={product.name}
-                    className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${
-                      hoveredIndex === index ? "blur-md scale-110" : "scale-100"
-                    }`}
-                  />
+                    {/* <img
+                      src={product.image || "/placeholder.jpg"}
+                      alt={product.name}
+                      className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${
+                        hoveredIndex === index ? "blur-md scale-110" : "scale-100"
+                      }`}
+                    /> */}
 
                   <div
                     className={`absolute inset-0 bg-black/60 transition-opacity duration-700 ${
