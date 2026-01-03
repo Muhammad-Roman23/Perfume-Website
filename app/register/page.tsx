@@ -8,20 +8,23 @@ import Link from 'next/link';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
+import { api } from '../apiBase/axios';
+import { useState } from 'react';
 
 export default function RegisterPage() {
+  const [data, setdata] = useState({})
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
+      username: '',
+      lname: '',
       email: '',
       password: '',
       confirmPassword: '',
       terms: false,
     },
     validationSchema: Yup.object({
-      firstName: Yup.string().trim().required('First Name is required'),
-      lastName: Yup.string().trim().required('Last Name is required'),
+      username: Yup.string().trim().required('First Name is required'),
+      lname: Yup.string().trim().required('Last Name is required'),
       email: Yup.string().email('Invalid email address').required('Email is required'),
       password: Yup.string()
         .min(6, 'Password must be at least 6 characters')
@@ -30,24 +33,31 @@ export default function RegisterPage() {
         .oneOf([Yup.ref('password')], 'Passwords must match')
         .required('Confirm Password is required'),
       terms: Yup.boolean().oneOf([true], 'You must accept Terms & Conditions'),
-    }),
-    onSubmit: (values, { resetForm }) => {
-      console.log('Registration submitted:', values);
-
-      // SweetAlert2 Success Alert
-      Swal.fire({
-        title: 'Welcome!',
-        text: 'Your account has been created successfully.',
-        icon: 'success',
-        confirmButtonText: 'Continue',
-        confirmButtonColor: '#1f2937',
-        background: '#fff',
-        timer: 4000,
-        timerProgressBar: true,
-      });
-
-      resetForm();
-      // Yahan real registration logic add kar sakte ho (next-auth, supabase, etc.)
+    }),     
+    onSubmit: async(values, { resetForm }) => {
+      try{
+          const response = await api.post("users/register",values)
+          setdata(response)
+          console.log(data);
+          
+          console.log('Registration submitted:', values);
+          Swal.fire({
+            title: 'Welcome!',
+            text: 'Your account has been created successfully.',
+            icon: 'success',
+            confirmButtonText: 'Continue',
+            confirmButtonColor: '#1f2937',
+            background: '#fff',
+            timer: 4000,
+            timerProgressBar: true,
+          });
+          resetForm();
+          }
+          catch{
+            console.log("not working");
+            
+          }
+      
     },
   });
 
@@ -95,34 +105,34 @@ export default function RegisterPage() {
               <div>
                 <input
                   type="text"
-                  name="firstName"
+                  name="username"
                   placeholder="First Name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.firstName}
+                  value={formik.values.username}
                   className={`px-5 py-3.5 border rounded-xl focus:outline-none focus:border-gray-900 transition text-base w-full ${
-                    formik.touched.firstName && formik.errors.firstName ? 'border-red-500' : 'border-gray-300'
+                    formik.touched.username && formik.errors.username ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
-                {formik.touched.firstName && formik.errors.firstName && (
-                  <p className="text-red-500 text-sm mt-1">{formik.errors.firstName}</p>
+                {formik.touched.username && formik.errors.username && (
+                  <p className="text-red-500 text-sm mt-1">{formik.errors.username}</p>
                 )}
               </div>
 
               <div>
                 <input
                   type="text"
-                  name="lastName"
+                  name="lname"
                   placeholder="Last Name"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.lastName}
+                  value={formik.values.lname}
                   className={`px-5 py-3.5 border rounded-xl focus:outline-none focus:border-gray-900 transition text-base w-full ${
-                    formik.touched.lastName && formik.errors.lastName ? 'border-red-500' : 'border-gray-300'
+                    formik.touched.lname && formik.errors.lname ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
-                {formik.touched.lastName && formik.errors.lastName && (
-                  <p className="text-red-500 text-sm mt-1">{formik.errors.lastName}</p>
+                {formik.touched.lname && formik.errors.lname && (
+                  <p className="text-red-500 text-sm mt-1">{formik.errors.lname}</p>
                 )}
               </div>
             </div>

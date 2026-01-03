@@ -7,40 +7,72 @@ import Image from 'next/image';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
+import { api } from '../apiBase/axios';
+import { log } from 'console';
+import { useState } from 'react';
 
 export default function ContactFormSection() {
+
+const [data,setdata] =  useState({})
+
   const formik = useFormik({
     initialValues: {
-      fullName: '',
+      name: '',
       email: '',
-      phone: '',
+      phone_number: '',
       subject: '',
-      message: '',
+      description: '',
     },
     validationSchema: Yup.object({
-      fullName: Yup.string().trim().required('Full Name is required'),
+      name: Yup.string().trim().required('Full Name is required'),
       email: Yup.string().email('Invalid email address').required('Email Address is required'),
-      phone: Yup.string()
+      phone_number: Yup.string()
         .matches(/^[0-9+\-\s()]+$/, 'Please enter a valid phone number')
         .required('Phone Number is required'),
       subject: Yup.string().trim().required('Subject is required'),
-      message: Yup.string().trim().min(10, 'Message must be at least 10 characters').required('Message is required'),
+      description: Yup.string().trim().min(10, 'Message must be at least 10 characters').required('Message is required'),
     }),
-    onSubmit: (values, { resetForm }) => {
-      console.log('Form submitted:', values);
+    onSubmit: async(values, { resetForm  }) => {
+      
+      try{
 
-      // SweetAlert2 Success Alert
-      Swal.fire({
-        title: 'Thank You!',
-        text: 'Your message has been sent successfully. We\'ll get back to you soon.',
-        icon: 'success',
-        confirmButtonText: 'Okay',
-        confirmButtonColor: '#1f2937',
-        background: '#fff',
-        backdrop: `rgba(0,0,0,0.8)`,
-      });
+        const response = await api.post("contact",values)
+        
+        setdata(response);
+        console.log(data);
+        
+        
+        if (response.data?.success) {
+            Swal.fire({
+              title: 'Thank You!',
+              text: response.data.message,
+              icon: 'success',
+              confirmButtonText: 'Okay',
+              confirmButtonColor: '#1f2937',
+              background: '#fff',
+              backdrop: `rgba(0,0,0,0.8)`,
+            });
 
-      resetForm();
+            resetForm();
+          }
+            
+        }
+      
+        
+      
+
+      catch (data: any) {
+        console.log(data);
+        console.log(data.message);
+        
+        Swal.fire({
+          title: 'Error',
+          text:
+            data.message,
+          icon: 'error',
+          confirmButtonColor: '#1f2937',
+        });
+        } 
     },
   });
 
@@ -85,17 +117,17 @@ export default function ContactFormSection() {
                 <div>
                   <input
                     type="text"
-                    name="fullName"
+                    name="name"
                     placeholder="Full Name *"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.fullName}
+                    value={formik.values.name}
                     className={`w-full px-6 py-4 border rounded-xl focus:outline-none focus:border-gray-900 transition bg-white/70 ${
-                      formik.touched.fullName && formik.errors.fullName ? 'border-red-500' : 'border-gray-300'
+                      formik.touched.name && formik.errors.name ? 'border-red-500' : 'border-gray-300'
                     }`}
                   />
-                  {formik.touched.fullName && formik.errors.fullName && (
-                    <p className="text-red-500 text-sm mt-1">{formik.errors.fullName}</p>
+                  {formik.touched.name && formik.errors.name && (
+                    <p className="text-red-500 text-sm mt-1">{formik.errors.name}</p>
                   )}
                 </div>
 
@@ -120,17 +152,17 @@ export default function ContactFormSection() {
               <div>
                 <input
                   type="tel"
-                  name="phone"
+                  name="phone_number"
                   placeholder="Phone Number *"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.phone}
+                  value={formik.values.phone_number}
                   className={`w-full px-6 py-4 border rounded-xl focus:outline-none focus:border-gray-900 transition bg-white/70 ${
-                    formik.touched.phone && formik.errors.phone ? 'border-red-500' : 'border-gray-300'
+                    formik.touched.phone_number && formik.errors.phone_number ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
-                {formik.touched.phone && formik.errors.phone && (
-                  <p className="text-red-500 text-sm mt-1">{formik.errors.phone}</p>
+                {formik.touched.phone_number && formik.errors.phone_number && (
+                  <p className="text-red-500 text-sm mt-1">{formik.errors.phone_number}</p>
                 )}
               </div>
 
@@ -153,18 +185,18 @@ export default function ContactFormSection() {
 
               <div>
                 <textarea
-                  name="message"
+                  name="description"
                   placeholder="Message *"
                   rows={6}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  value={formik.values.message}
+                  value={formik.values.description}
                   className={`w-full px-6 py-4 border rounded-xl focus:outline-none focus:border-gray-900 transition bg-white/70 resize-none ${
-                    formik.touched.message && formik.errors.message ? 'border-red-500' : 'border-gray-300'
+                    formik.touched.description && formik.errors.description ? 'border-red-500' : 'border-gray-300'
                   }`}
                 />
-                {formik.touched.message && formik.errors.message && (
-                  <p className="text-red-500 text-sm mt-1">{formik.errors.message}</p>
+                {formik.touched.description && formik.errors.description && (
+                  <p className="text-red-500 text-sm mt-1">{formik.errors.description}</p>
                 )}
               </div>
 
