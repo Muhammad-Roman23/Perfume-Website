@@ -21,6 +21,7 @@ export default function RegisterPage() {
       password: '',
       confirmPassword: '',
       terms: false,
+      
     },
     validationSchema: Yup.object({
       username: Yup.string().trim().required('First Name is required'),
@@ -35,15 +36,21 @@ export default function RegisterPage() {
       terms: Yup.boolean().oneOf([true], 'You must accept Terms & Conditions'),
     }),     
     onSubmit: async(values, { resetForm }) => {
+      console.log(values);
+      let newobj = {
+        ...values,
+        avatar:'http://localhost:4000/images/flower.jpg'
+      }
+
       try{
-          const response = await api.post("users/register",values)
+          const response = await api.post("users/register",newobj)
           setdata(response)
-          console.log(data);
+          console.log(response);
           
           console.log('Registration submitted:', values);
           Swal.fire({
             title: 'Welcome!',
-            text: 'Your account has been created successfully.',
+            text: response.data.message,
             icon: 'success',
             confirmButtonText: 'Continue',
             confirmButtonColor: '#1f2937',
@@ -53,8 +60,34 @@ export default function RegisterPage() {
           });
           resetForm();
           }
-          catch{
-            console.log("not working");
+          catch  (data:any){
+          
+            
+            const message  = data.response.data.message;
+            
+
+
+            if (message === "User already exists"){
+              Swal.fire({
+                title: 'Registration Failed',
+                text:data.response.data.message,
+                icon: 'error',
+                confirmButtonText: 'Try Again',
+                confirmButtonColor: '#dc2626',
+                background: '#fff',
+              });
+            }else{
+              Swal.fire({
+                title: 'Registration Failed',
+                text:data.message,
+                icon: 'error',
+                confirmButtonText: 'Try Again',
+                confirmButtonColor: '#dc2626',
+                background: '#fff',
+              });
+            }
+
+
             
           }
       
@@ -211,7 +244,7 @@ export default function RegisterPage() {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={formik.isSubmitting}
-              className="w-full py-3.5 bg-gray-900 text-white font-semibold text-base md:text-lg rounded-xl hover:bg-gray-800 transition shadow-lg disabled:opacity-70"
+              className="w-full py-3.5 cursor-pointer bg-gray-900 text-white font-semibold text-base md:text-lg rounded-xl hover:bg-gray-800 transition shadow-lg disabled:opacity-70"
             >
               {formik.isSubmitting ? 'Creating Account...' : 'Create Account'}
             </motion.button>

@@ -475,10 +475,10 @@ const filteredProducts = useMemo(() => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-10 md:gap-12">
             {filteredProducts.map((product, index) => (
               <motion.div
-                key={product.name} // ✅ FIXED
+                key={product.name} 
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

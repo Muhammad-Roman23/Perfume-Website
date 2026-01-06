@@ -22,6 +22,7 @@ const [data,setdata] =  useState({})
       phone_number: '',
       subject: '',
       description: '',
+      
     },
     validationSchema: Yup.object({
       name: Yup.string().trim().required('Full Name is required'),
@@ -33,10 +34,10 @@ const [data,setdata] =  useState({})
       description: Yup.string().trim().min(10, 'Message must be at least 10 characters').required('Message is required'),
     }),
     onSubmit: async(values, { resetForm  }) => {
-      
-      try{
 
-        const response = await api.post("contact",values)
+      try{  
+
+        const response = await api.post("http://localhost:4000/contact",values)
         
         setdata(response);
         console.log(data);

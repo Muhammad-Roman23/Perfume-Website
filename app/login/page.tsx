@@ -8,8 +8,11 @@ import Link from 'next/link';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
+import { api } from '../apiBase/axios';
+import { useState } from 'react';
 
 export default function SignInPage() {
+  const [data, setdata] =  useState({})
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -23,23 +26,71 @@ export default function SignInPage() {
         .min(6, 'Password must be at least 6 characters')
         .required('Password is required'),
     }),
-    onSubmit: (values, { resetForm }) => {
-      console.log('Login submitted:', values);
+    onSubmit: async (values, { resetForm }) => {
+      try{
+        const response = await api.post("users/login",values)
+        setdata(response)
+        console.log(response);
+        const role = response.data.data.user.role
+        console.log(role);
 
-      // SweetAlert2 Success Alert
-      Swal.fire({
-        title: 'Welcome Back!',
-        text: 'You have successfully signed in.',
-        icon: 'success',
-        confirmButtonText: 'Continue',
-        confirmButtonColor: '#1f2937',
-        background: '#fff',
-        timer: 3000,
-        timerProgressBar: true,
-      });
+              
+
+        
+      
+
+        console.log('Login submitted:', values);
+        
+        
+        Swal.fire({
+          title: 'Welcome Back!',
+          text: response.data.message,
+          icon: 'success',
+          confirmButtonText: 'Continue',
+          confirmButtonColor: '#1f2937',
+          background: '#fff',
+          timer: 3000,
+          timerProgressBar: true,
+        });
+          
 
       resetForm();
-      // Yahan real login logic add kar sakte ho (next-auth, firebase, etc.)
+      }
+      catch(data:any){
+        console.log(data.response.data.message);
+        
+      
+        const message = data.response.data.message;
+        console.log(message);
+
+        if (message === "User does not exist"){
+            Swal.fire({
+              title: 'Email Not Found',
+              text: data.response.data.message,
+              icon: 'error',
+              confirmButtonColor: '#dc2626',
+            });
+        }
+        else if (message === "Invalid password"){
+            Swal.fire({
+              title: 'Incorrect Password',
+              text: data.response.data.message,
+              icon: 'error',
+              confirmButtonColor: '#dc2626',
+            });
+        }  else{
+            Swal.fire({
+              title: 'Login Failed',
+              text: 'Something went wrong. Please try again later.',
+              icon: 'error',
+              confirmButtonColor: '#dc2626',
+            });
+        } 
+      }
+
+
+      
+     
     },
   });
 
@@ -112,7 +163,7 @@ export default function SignInPage() {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={formik.isSubmitting}
-              className="w-full py-3.5 bg-gray-900 text-white font-semibold text-base md:text-lg rounded-xl hover:bg-gray-800 transition shadow-lg disabled:opacity-70"
+              className="w-full py-3.5 cursor-pointer bg-gray-900 text-white font-semibold text-base md:text-lg rounded-xl hover:bg-gray-800 transition shadow-lg disabled:opacity-70"
             >
               {formik.isSubmitting ? 'Signing In...' : 'Sign In'}
             </motion.button>
