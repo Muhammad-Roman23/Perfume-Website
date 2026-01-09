@@ -46,6 +46,10 @@ export default function RegisterPage() {
           const response = await api.post("users/register",newobj)
           setdata(response)
           console.log(response);
+          const role = response.data.data.user.role
+        console.log(role);
+          
+      
           
           console.log('Registration submitted:', values);
           Swal.fire({
@@ -64,6 +68,8 @@ export default function RegisterPage() {
           
             
             const message  = data.response.data.message;
+            console.log(message);
+            
             
 
 

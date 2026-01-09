@@ -2,6 +2,7 @@
 
 'use client';
 
+
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,9 +10,18 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
 import { api } from '../apiBase/axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { useRouter } from 'next/navigation'
 
 export default function SignInPage() {
+
+  //  useEffect(() => {
+  //   const nav = performance.getEntriesByType("navigation")[0]
+  //   console.log("Navigation type:", nav.type)
+  // }, [])
+   const router = useRouter()
+
   const [data, setdata] =  useState({})
   const formik = useFormik({
     initialValues: {
@@ -29,18 +39,17 @@ export default function SignInPage() {
     onSubmit: async (values, { resetForm }) => {
       try{
         const response = await api.post("users/login",values)
+        const token = response.data.data.accessToken
+        console.log(token);
+        localStorage.setItem("token",token)
+        
         setdata(response)
-        console.log(response);
+        console.log(response);    
         const role = response.data.data.user.role
         console.log(role);
-
-              
-
-        
-      
-
         console.log('Login submitted:', values);
         
+        role === "user" ? router.replace('/') : router.replace("/admin") 
         
         Swal.fire({
           title: 'Welcome Back!',
@@ -52,16 +61,18 @@ export default function SignInPage() {
           timer: 3000,
           timerProgressBar: true,
         });
+
+        // user
           
 
       resetForm();
       }
       catch(data:any){
         console.log(data.response.data.message);
-        
-      
+
         const message = data.response.data.message;
         console.log(message);
+
 
         if (message === "User does not exist"){
             Swal.fire({
@@ -78,7 +89,8 @@ export default function SignInPage() {
               icon: 'error',
               confirmButtonColor: '#dc2626',
             });
-        }  else{
+        } 
+        else{
             Swal.fire({
               title: 'Login Failed',
               text: 'Something went wrong. Please try again later.',

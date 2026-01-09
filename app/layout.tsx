@@ -6,7 +6,12 @@ import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
 import './globals.css';
 import { Poppins, Playfair_Display } from 'next/font/google';
-import { usePathname } from 'next/navigation'; // <-- Ye import karo
+import { usePathname } from 'next/navigation'; 
+
+
+import { Provider } from "react-redux";
+import { store } from './Redux/Store';
+
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -21,22 +26,28 @@ const playfair = Playfair_Display({
 });
 
 export default function RootLayout({
+  
   children,
 }: {
   children: React.ReactNode;
 }) {
   const pathname = usePathname(); 
 
-  const hideHeaderFooterPages = ['/login', '/register'];
+  const hideHeaderFooterPages = ['/login', '/register',"/admin","/admin/create"];
 
   const showHeaderFooter = !hideHeaderFooterPages.includes(pathname);
+
+     
 
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${playfair.variable} antialiased`}>
+           <Provider store={store}>
+
         {showHeaderFooter && <Navbar />}
         {children}
         {showHeaderFooter && <Footer />}
+           </Provider>
       </body>
     </html>
   );
