@@ -36,7 +36,7 @@ export default function AdminCreateProduct() {
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
-    }));
+    }));          
   };
 
   const sumbitbtn = async (e: React.FormEvent) => {

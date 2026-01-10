@@ -3,7 +3,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { api } from "../apiBase/axios";
 import Swal from "sweetalert2";
-import { AllProductsSection } from "../Components/AllProductsSection";
+import { useRouter } from 'next/navigation'
+// import { AllProductsSection } from "../Components/AllProductsSection";
 
 
 // interface Product {
@@ -18,6 +19,7 @@ import { AllProductsSection } from "../Components/AllProductsSection";
 // }
 
 export default function AdminProductsList() {
+     const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setdata] = useState([]);
   async function GetApiData() {
@@ -27,7 +29,6 @@ export default function AdminProductsList() {
       console.log(response.data.data);
       setdata(response.data.data);
       setLoading(false);
-
     } catch {
       console.log("error in api");
     }
@@ -87,6 +88,7 @@ export default function AdminProductsList() {
   // edit    
   const handleEdit = ((product:any)=>{
     console.log(product);      
+     router.push(`/admin/create?id=${product._id}`);
   })
 
   if (loading) {
