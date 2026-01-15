@@ -1,12 +1,29 @@
 "use client";
 import { api } from "@/app/apiBase/axios";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useParams, useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 export default function AdminCreateProduct() {
   const [step, setStep] = useState(1);
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  console.log(id);
 
+
+  const GetEditApiData = async() => {
+    const editApi = await api.get(`product/getbyid/${id}`)
+    console.log(editApi.data.data);
+    // setFormData(editApi)
+    setFormData(editApi.data.data)
+  }
+  
+  useEffect(()=>{
+    GetEditApiData( ) 
+  },[])
+
+  
   const [formData, setFormData] = useState({
     product_name: "",
     category: "",

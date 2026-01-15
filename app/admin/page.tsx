@@ -3,7 +3,10 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { api } from "../apiBase/axios";
 import Swal from "sweetalert2";
-import { useRouter } from 'next/navigation'
+import {  useRouter, useSearchParams } from 'next/navigation'
+
+
+// useParams
 // import { AllProductsSection } from "../Components/AllProductsSection";
 
 
@@ -19,6 +22,9 @@ import { useRouter } from 'next/navigation'
 // }
 
 export default function AdminProductsList() {
+       const searchParams = useSearchParams();
+
+
      const router = useRouter()
   const [loading, setLoading] = useState<boolean>(true);
   const [data, setdata] = useState([]);
@@ -88,7 +94,13 @@ export default function AdminProductsList() {
   // edit    
   const handleEdit = ((product:any)=>{
     console.log(product);      
-     router.push(`/admin/create?id=${product._id}`);
+    router.push(`/admin/create?id=${product._id}`);
+    const productId = searchParams.get("_id");
+    console.log(productId); 
+     
+
+
+  
   })
 
   if (loading) {
