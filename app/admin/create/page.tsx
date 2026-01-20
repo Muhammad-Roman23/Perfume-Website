@@ -498,15 +498,18 @@ export default function AdminCreateProduct() {
       {[0, 1, 2].map((i) => (
         <div key={i} className="relative">
           {/* IMAGE PREVIEW CARD */}
-         <img
-  src={
-    typeof formData.cover_images[i] === "string"
-      ? formData.cover_images[i]
-      : URL.createObjectURL(formData.cover_images[i] as File)
-  }
-  alt={`Preview ${i + 1}`}
-  className="object-cover w-full h-40"
-/>
+        {formData.cover_images[i] && (
+          <img
+            src={
+              typeof formData.cover_images[i] === "string"
+                ? formData.cover_images[i]
+                : URL.createObjectURL(formData.cover_images[i] as File)
+            }
+            alt={`Preview ${i + 1}`}
+            className="object-cover w-full h-40 rounded-xl"
+          />
+        )}
+
 
           {/* FILE INPUT */}
           <input

@@ -9,6 +9,7 @@ export const AllProductsSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [data, setdata] = useState([])
+  const localdata =  localStorage.getItem("token")
 const getApiData = async() => {
  try{
 
@@ -64,7 +65,7 @@ useEffect(()=>{
           {data.map((product:any, index:any) => (
             <motion.div key={index} initial={{ opacity: 0, y: 60 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: index * 0.15 }} onHoverStart={() => setHoveredIndex(index)} onHoverEnd={() => setHoveredIndex(null)} className="group relative overflow-hidden rounded-2xl shadow-2xl cursor-pointer border border-gray-400 h-[500px]">
               <div className="relative h-full w-full">
-                <Image src={product.cover_images} alt={product.product_name} fill className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${hoveredIndex === index ? "blur-md scale-110" : "scale-100"}`} />
+                <Image src={product.cover_images[1]} alt={product.product_name} fill className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${hoveredIndex === index ? "blur-md scale-110" : "scale-100"}`} />
                 <div className={`absolute inset-0 bg-black/60 transition-opacity duration-700 ${hoveredIndex === index ? "opacity-100" : "opacity-0"}`} />
 
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: hoveredIndex === index ? 1 : 0, scale: hoveredIndex === index ? 1 : 0.95, translateY: "-40px" }} transition={{ duration: 0.6 }} className="absolute inset-0 flex items-center justify-center px-4 md:p-8 pointer-events-none">
@@ -82,7 +83,10 @@ useEffect(()=>{
                   </div>
                 </motion.div>
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <button className="w-full bg-white text-black py-4 font-bold rounded-xl hover:bg-amber-400 transition">View Details</button>
+                  {
+                     
+                    <button className="w-full bg-white text-black py-4 font-bold rounded-xl hover:bg-amber-400 transition">View Details</button>
+                  }
                 </div>
               </div>
             </motion.div>
